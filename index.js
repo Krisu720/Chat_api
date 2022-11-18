@@ -28,10 +28,10 @@ app.use('/api/room',RoomRouter)
 io.on("connection", (socket) => {
   console.log(`${socket.id} connected`);
   socket.on("send_message", (data) => {
-    socket.to('global').emit("receive_message",data);
+    socket.to(data.room).emit("receive_message",data);
   });
   
-  socket.on("join_global",(data)=>{
+  socket.on("join_room",(data)=>{
     socket.join(data)
     console.log(`${socket.id} joined ${data}`)
   })
@@ -44,3 +44,5 @@ io.on("connection", (socket) => {
 server.listen(3001, () => {
   console.log("SERVER RUNNING...");
 });
+
+
